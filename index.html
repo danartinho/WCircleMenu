@@ -71,14 +71,34 @@ You can replace divs inside these icon and menu div elements with links or image
 <pre><code>$('#my-menu').WCircleMenu();
 </code></pre>
 
+ <div id="my-menu" class="" style="border-radius: 50%;position: relative; width: 50px; height: 50px; background-color: #999;margin:200px auto;">
+    <div class="wcircle-icon">
+        <div style="padding: 15px;width: 20px;height: 20px;text-align: center;">
+            +
+        </div>
+    </div>
+    <div class="wcircle-menu" style="display:none;">
+        <div class="wcircle-menu-item" style="background-color:red;border-radius:50%;padding:15px;width:20px;height:20px;">
+            A
+        </div>
+        <div class="wcircle-menu-item" style="background-color:green;border-radius:50%;padding:15px;width:20px;height:20px;">
+            B
+        </div>
+        <div class="wcircle-menu-item" style="background-color:blue;border-radius:50%;padding:15px;width:20px;height:20px;">
+            C
+        </div>
+        <div class="wcircle-menu-item" style="background-color:yellow;border-radius:50%;padding:15px;width:20px;height:20px;">
+            D
+        </div>
+    </div>
+</div>
+
 <h3>
 <a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
 
 <p>WCircleMenu is customizable with following options</p>
 
 <pre><code>$('#menu_icon').WCircleMenu({
-width: '50px',
-height: '50px',
 angle_start : -Math.PI/2,
 delay: 50,
 distance: 100,
@@ -114,6 +134,8 @@ iconRotation:180,
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="jQuery.WCircleMenu-min.js"></script>
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -123,6 +145,10 @@ iconRotation:180,
               var pageTracker = _gat._getTracker("UA-44209272-5");
             pageTracker._trackPageview();
             } catch(err) {}
+
+            $(document).ready(function(){
+              $('#my-menu').WCircleMenu();
+            });
           </script>
 
   </body>
