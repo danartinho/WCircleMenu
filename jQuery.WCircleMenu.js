@@ -12,6 +12,14 @@
 (function($) {
 
 	$.fn.WCircleMenu = function( options ) {
+		if(options=='open'){
+			this.trigger('WCircleMenuOpen');
+			return;
+		}
+		if(options=='close'){
+			this.trigger('WCircleMenuClose');
+			return;
+		}
 		var opts = $.extend({},$.fn.WCircleMenu.defaults,options);
 		opts.easingFuncShow = getEasingFunc(opts.easingFuncShow);
 		opts.easingFuncHide = getEasingFunc(opts.easingFuncHide);
@@ -21,96 +29,130 @@
 		this.children('div.wcircle-menu').css({'width':opts.width,'height':opts.height,'position':'relative','display':'none'})
 			.children('div').css({'position':'absolute','top':'0','left':'0','opacity':'0'});
 
-		return this.off('click').on('click', function(e) {
-			var icon_wrapper = $(this).children('div.wcircle-menu');
-			if(icon_wrapper.is(':visible'))
+		function openMenu(elem){
+			if(elem.is('.wcircle-open')) return;
+			var icon_wrapper = elem.children('div.wcircle-menu');
+			icon_wrapper.show();
+			var target = icon_wrapper.children('div');
+			animateTranslateXYO({
+						'objek':icon_wrapper.prev(),
+						'targetX':0,
+						'fromX':0,
+						'targetY':0,
+						'fromY':0,
+						'targetO':1,
+						'fromO':1,
+						'targetRot':opts.iconRotation,
+						'fromRot':0,
+						'easingFunc':opts.easingFuncShow,
+						'step':opts.step,
+					});
+			for (var i=0; i<target.length;i++)
 			{
-				var target = icon_wrapper.children('div');
-				animateTranslateXYO({
-					'objek':icon_wrapper.prev(),
-					'targetX':0,
-					'fromX':0,
-					'targetY':0,
-					'fromY':0,
-					'targetO':1,
-					'fromO':1,
-					'targetRot':0,
-					'fromRot':opts.iconRotation,
-					'easingFunc':opts.easingFuncHide,
-					'step':opts.step,
-				});
-				for (var i=(target.length-1); i>=0;i--)
-				{
-					(function(increment){
-						var callback = false;
-						if(increment == 0) {
-							callback = function(){
-								icon_wrapper.hide();
-								if(typeof opts.closeCallback == 'function')
-								{
-									opts.closeCallback();
-								}
-							};
-						}
-						setTimeout(function(){
-							animateTranslateXYO({
-								'objek':target.eq(increment),
-								'targetX':0,
-								'fromX':parseInt(Math.cos(opts.angle_interval*increment+opts.angle_start)*opts.distance),
-								'targetY':0,
-								'fromY':parseInt(Math.sin(opts.angle_interval*increment+opts.angle_start)*opts.distance),
-								'targetO':0,
-								'fromO':1,
-								'targetRot':opts.itemRotation,
-								'fromRot':0,
-								'easingFunc':opts.easingFuncHide,
-								'step':opts.step,
-								'callback':callback,
-							});
-						},opts.delay*(target.length-(increment+1)));
-					})(i);
-				}
-			} else {
-				icon_wrapper.show();
-				var target = icon_wrapper.children('div');
-				animateTranslateXYO({
-							'objek':icon_wrapper.prev(),
-							'targetX':0,
+				(function(increment){
+					var callback = false;
+					if(increment == target.length-1) {
+						callback = function(){
+							elem.removeClass('wcircle-animating');
+							elem.addClass('wcircle-open');
+							if(typeof opts.openCallback == 'function')
+							{
+								opts.openCallback();
+							}
+						};
+					}
+					setTimeout(function(){
+						animateTranslateXYO({
+							'objek':target.eq(increment),
+							'targetX':Math.round(Math.cos(opts.angle_interval*increment+opts.angle_start)*opts.distance),
 							'fromX':0,
-							'targetY':0,
+							'targetY':Math.round(Math.sin(opts.angle_interval*increment+opts.angle_start)*opts.distance),
 							'fromY':0,
 							'targetO':1,
-							'fromO':1,
-							'targetRot':opts.iconRotation,
-							'fromRot':0,
+							'fromO':0,
+							'targetRot':0,
+							'fromRot':opts.itemRotation,
 							'easingFunc':opts.easingFuncShow,
 							'step':opts.step,
+							'callback':callback,
 						});
-				for (var i=0; i<target.length;i++)
-				{
-					(function(increment){
-						var callback = false;
-						if(increment == target.length-1) {
-							callback = opts.openCallback;
-						}
-						setTimeout(function(){
-							animateTranslateXYO({
-								'objek':target.eq(increment),
-								'targetX':parseInt(Math.cos(opts.angle_interval*increment+opts.angle_start)*opts.distance),
-								'fromX':0,
-								'targetY':parseInt(Math.sin(opts.angle_interval*increment+opts.angle_start)*opts.distance),
-								'fromY':0,
-								'targetO':1,
-								'fromO':0,
-								'targetRot':0,
-								'fromRot':opts.itemRotation,
-								'easingFunc':opts.easingFuncShow,
-								'step':opts.step,
-								'callback':callback,
-							});
-						},opts.delay*increment);
-					})(i);
-				}
+					},opts.delay*increment);
+				})(i);
+			}
+		};
+
+		function closeMenu (elem) {
+			if(!elem.is('.wcircle-open')) return;
+			var icon_wrapper = elem.children('div.wcircle-menu');
+			var target = icon_wrapper.children('div');
+			animateTranslateXYO({
+				'objek':icon_wrapper.prev(),
+				'targetX':0,
+				'fromX':0,
+				'targetY':0,
+				'fromY':0,
+				'targetO':1,
+				'fromO':1,
+				'targetRot':0,
+				'fromRot':opts.iconRotation,
+				'easingFunc':opts.easingFuncHide,
+				'step':opts.step,
+			});
+			for (var i=(target.length-1); i>=0;i--)
+			{
+				(function(increment){
+					var callback = false;
+					if(increment == 0) {
+						callback = function(){
+							icon_wrapper.hide();
+							elem.removeClass('wcircle-animating');
+							elem.removeClass('wcircle-open');
+							if(typeof opts.closeCallback == 'function')
+							{
+								opts.closeCallback();
+							}
+						};
+					}
+					setTimeout(function(){
+						animateTranslateXYO({
+							'objek':target.eq(increment),
+							'targetX':0,
+							'fromX':Math.round(Math.cos(opts.angle_interval*increment+opts.angle_start)*opts.distance),
+							'targetY':0,
+							'fromY':Math.round(Math.sin(opts.angle_interval*increment+opts.angle_start)*opts.distance),
+							'targetO':0,
+							'fromO':1,
+							'targetRot':opts.itemRotation,
+							'fromRot':0,
+							'easingFunc':opts.easingFuncHide,
+							'step':opts.step,
+							'callback':callback,
+						});
+					},opts.delay*(target.length-(increment+1)));
+				})(i);
+			}
+		};
+
+		this.off('WCircleMenuOpen').on('WCircleMenuOpen',function(){
+			self = $(this);
+			openMenu(self);
+		});
+
+		this.off('WCircleMenuClose').on('WCircleMenuClose',function(){
+			self = $(this);
+			closeMenu(self);
+		});
+
+		return this.off('click').on('click', function(e) {
+			var self = $(this);
+			if(self.is('.wcircle-animating')) return;
+			self.addClass('wcircle-animating');
+			var icon_wrapper = self.children('div.wcircle-menu');
+			if(icon_wrapper.is(':visible'))
+			{
+				closeMenu(self);
+			} else {
+				openMenu(self);
 			}
 		});
 

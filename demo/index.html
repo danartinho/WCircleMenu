@@ -38,6 +38,9 @@
 			</div>
 		</div>
 
+		<button id="openWCM">open</button>
+		<button id="closeWCM">close</button>
+
 
         <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="../jQuery.WCircleMenu.js"></script>
@@ -61,6 +64,15 @@
 				$('.icons').off('click').on('click',function(){
 					console.log($(this).text());
 				});
+
+				$('#openWCM').off('click').on('click',function(){
+					$('#menu_icon').WCircleMenu('open');
+				});
+
+				$('#closeWCM').off('click').on('click',function(){
+					$('#menu_icon').WCircleMenu('close');
+				});
+
 			});
 
         </script>
