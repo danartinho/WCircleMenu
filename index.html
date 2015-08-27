@@ -29,9 +29,9 @@
       </header>
       <section>
         <h3>
-<a name="what-is-wcirclemenu" class="anchor" href="#what-is-wcirclemenu"><span class="octicon octicon-link"></span></a>what is WCircleMenu</h3>
+<a name="what-is-wcirclemenu" class="anchor" href="#what-is-wcirclemenu"><span class="octicon octicon-link"></span></a>What is WCircleMenu?</h3>
 
-<p>WCircleMenu is a jQuery plugin to create circle menu like Path app. WCircleMenu use javascript to calculate transition of elements. It doesn't use CSS easing function. </p>
+<p>WCircleMenu is a jQuery plugin to create circle menu like Path app. WCircleMenu use javascript to calculate transition and animation of elements. It doesn't use CSS easing function. </p>
 
 <h3>
 <a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How To Use</h3>
@@ -71,24 +71,19 @@ You can replace divs inside these icon and menu div elements with links or image
 <pre><code>$('#my-menu').WCircleMenu();
 </code></pre>
 
- <div id="my-menu" class="" style="border-radius: 50%;position: relative; width: 50px; height: 50px; background-color: #999;margin:50px auto;">
+ <div id="my-menu" class="" style="border-radius: 50%;position: relative; width: 50px; height: 50px; margin:150px auto 50px;">
     <div class="wcircle-icon">
-        <div style="padding: 15px;width: 20px;height: 20px;text-align: center;">
-            +
+        <div style="width: 50px;height: 50px;text-align: center;background-image: url(plus.png);background-size: 100%;background-repeat:no-repeat;">
         </div>
     </div>
     <div class="wcircle-menu" style="display:none;">
-        <div class="wcircle-menu-item" style="background-color:red;border-radius:50%;padding:15px;width:20px;height:20px;">
-            A
+        <div class="wcircle-menu-item" style="border-radius:50%;padding:15px;width:20px;height:20px;background-image: url(twitter.png);background-size: 100%;background-repeat: no-repeat;">
         </div>
-        <div class="wcircle-menu-item" style="background-color:green;border-radius:50%;padding:15px;width:20px;height:20px;">
-            B
+        <div class="wcircle-menu-item" style="border-radius:50%;padding:15px;width:20px;height:20px;background-image: url(fb.png);background-size: 100%;background-repeat: no-repeat;">
         </div>
-        <div class="wcircle-menu-item" style="background-color:blue;border-radius:50%;padding:15px;width:20px;height:20px;">
-            C
+        <div class="wcircle-menu-item" style="border-radius:50%;padding:15px;width:20px;height:20px;background-image: url(gplus.png);background-size: 100%;background-repeat: no-repeat;">
         </div>
-        <div class="wcircle-menu-item" style="background-color:yellow;border-radius:50%;padding:15px;width:20px;height:20px;">
-            D
+        <div class="wcircle-menu-item" style="border-radius:50%;padding:15px;width:20px;height:20px;background-image: url(linkedin.png);background-size: 100%;background-repeat: no-repeat;">
         </div>
     </div>
 </div>
@@ -124,7 +119,10 @@ You can replace divs inside these icon and menu div elements with links or image
 
 <pre><code>$('#menu_icon').WCircleMenu('close');</code></pre>
 
-<p>Example</p>
+<h3>
+  <a name="next" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>
+  Example
+</h3>
 
 <pre><code>&lt;div id="menu_icon" class="" style="border-radius: 50%;position: relative; width: 50px; height: 50px; background-color: #999;margin:200px auto;"&gt;
   &lt;div class="wcircle-icon"&gt;
